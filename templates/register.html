@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Create account · PlateConnect{% endblock %}
+{% block content %}
+<div class="form-card"><h1>Create your account</h1><p class="muted">Join your campus food-sharing community.</p>
+<form method="post" class="stack">
+  <label>Full name<input name="name" required maxlength="100" value="{{ request.form.get('name','') }}"></label>
+  <label>Email address<input type="email" name="email" required value="{{ request.form.get('email','') }}"></label>
+  <label>Password (at least 8 characters)<input type="password" name="password" minlength="8" required></label>
+  <label>I am a
+    <select name="role"><option value="receiver">Food receiver</option><option value="provider">Food provider</option><option value="volunteer">Volunteer</option></select>
+  </label>
+  <button>Create account</button>
+</form><p>Already registered? <a href="{{ url_for('login') }}">Log in</a>.</p></div>
+{% endblock %}
