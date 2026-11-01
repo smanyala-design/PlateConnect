@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · PlateConnect{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">YOUR ACTIVITY</p><h1>Hello, {{ g.user.name }}!</h1><p class="muted">Manage your food listings and requests here.</p></div><a class="button" href="{{ url_for('new_listing') }}">+ Add food</a></div>
+<section class="panel"><h2>My food listings</h2>
+{% for item in my_listings %}<div class="row-item"><div><strong>{{ item.food_name }}</strong><p class="muted">{{ item.quantity }} portion(s) · {{ item.location }}</p></div><span class="status">{{ item.status }}</span><a href="{{ url_for('listing_detail', listing_id=item.id) }}">View</a></div>
+{% else %}<p class="muted">You have not created any listings yet.</p>{% endfor %}</section>
+<section class="panel"><h2>Requests I submitted</h2>
+{% for item in my_requests %}<div class="row-item"><div><strong>{{ item.food_name }}</strong><p class="muted">{{ item.quantity }} portion(s) · {{ item.location }}</p></div><span class="status">{{ item.status }}</span></div>
+{% else %}<p class="muted">You have not requested food yet.</p>{% endfor %}</section>
+<section class="panel"><h2>Incoming requests for my food</h2>
+{% for item in incoming %}<div class="row-item"><div><strong>{{ item.food_name }} · {{ item.quantity }} portion(s)</strong><p class="muted">Requested by {{ item.receiver_name }}{% if item.message %} — {{ item.message }}{% endif %}</p></div><span class="status">{{ item.status }}</span>
+{% if item.status == 'Pending' %}<div class="inline-actions"><form method="post" action="{{ url_for('update_request', request_id=item.id, action='approve') }}"><button class="small">Approve</button></form><form method="post" action="{{ url_for('update_request', request_id=item.id, action='decline') }}"><button class="small danger">Decline</button></form></div>{% endif %}</div>
+{% else %}<p class="muted">No requests received yet.</p>{% endfor %}</section>
+{% endblock %}
