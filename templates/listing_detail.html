@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ listing.food_name }} · PlateConnect{% endblock %}
+{% block content %}
+<a href="{{ url_for('index') }}" class="back-link">← Back to listings</a>
+<div class="detail-card"><span class="tag">{{ listing.category }}</span><h1>{{ listing.food_name }}</h1>
+<p class="muted">Shared by {{ listing.provider_name }}</p><div class="detail-facts"><p>🍽️ <strong>{{ listing.quantity }}</strong> portion(s)</p><p>📍 {{ listing.location }}</p><p>⏰ Pickup until {{ listing.pickup_until }}</p></div>
+<p>{{ listing.description or "No extra details provided." }}</p>
+{% if g.user and g.user.id != listing.user_id and listing.status == 'Available' %}
+<hr><h2>Request food</h2><form method="post" action="{{ url_for('request_food', listing_id=listing.id) }}" class="stack">
+<label>Quantity needed<input type="number" name="quantity" min="1" max="{{ listing.quantity }}" required></label>
+<label>Message to provider<textarea name="message" rows="3" maxlength="500" placeholder="Optional pickup details"></textarea></label><button>Submit request</button></form>
+{% elif not g.user %}<p><a href="{{ url_for('login') }}">Log in</a> to request this food.</p>
+{% elif listing.status != 'Available' %}<p class="tag">Unavailable</p>{% endif %}
+</div>
+{% endblock %}
