@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Share surplus food · PlateConnect{% endblock %}
+{% block content %}
+<div class="form-card wide"><h1>Share surplus food</h1><p class="muted">Add clear details so receivers can plan a pickup.</p>
+<form method="post" class="stack">
+  <label>Food name<input name="food_name" required maxlength="120" value="{{ request.form.get('food_name','') }}"></label>
+  <label>Category<select name="category" required><option value="">Choose category</option><option>Meals</option><option>Bakery</option><option>Fruits</option><option>Vegetables</option><option>Dairy</option><option>Packaged food</option><option>Other</option></select></label>
+  <label>Quantity (portions)<input type="number" name="quantity" min="1" required value="{{ request.form.get('quantity','') }}"></label>
+  <label>Pickup location<input name="location" required maxlength="180" value="{{ request.form.get('location','') }}"></label>
+  <label>Pickup until<input type="datetime-local" name="pickup_until" required value="{{ request.form.get('pickup_until','') }}"></label>
+  <label>Description / allergy notes<textarea name="description" rows="4" maxlength="1000">{{ request.form.get('description','') }}</textarea></label>
+  <button>Publish listing</button>
+</form></div>
+{% endblock %}
