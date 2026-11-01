@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}My profile · PlateConnect{% endblock %}
+{% block content %}
+<div class="form-card"><h1>My profile</h1>
+<form method="post" class="stack"><label>Full name<input name="name" required value="{{ user.name }}"></label>
+<label>Email address<input value="{{ user.email }}" disabled><small>Email cannot be changed in this demo.</small></label>
+<label>Account role<select name="role"><option value="receiver" {% if user.role == 'receiver' %}selected{% endif %}>Food receiver</option><option value="provider" {% if user.role == 'provider' %}selected{% endif %}>Food provider</option><option value="volunteer" {% if user.role == 'volunteer' %}selected{% endif %}>Volunteer</option></select></label>
+<button>Save profile</button></form></div>
+{% endblock %}
