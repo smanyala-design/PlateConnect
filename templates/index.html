@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Find surplus food · PlateConnect{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">LESS WASTE · MORE CARE</p>
+  <h1>Good food deserves<br>another plate.</h1>
+  <p>Discover surplus food shared by your campus community.</p>
+  <form class="search" method="get" action="{{ url_for('index') }}">
+    <input name="q" value="{{ search }}" placeholder="Search food, category, or location">
+    <button type="submit">Search</button>
+  </form>
+</section>
+<div class="section-heading"><h2>Available food</h2><span>{{ listings|length }} listing(s)</span></div>
+<div class="grid">
+{% for item in listings %}
+  <article class="card">
+    <div class="food-icon">🥗</div>
+    <span class="tag">{{ item.category }}</span>
+    <h3>{{ item.food_name }}</h3>
+    <p class="muted">Shared by {{ item.provider_name }}</p>
+    <p>📍 {{ item.location }}</p>
+    <p>🍽️ {{ item.quantity }} portion(s)</p>
+    <p>⏰ Pickup until {{ item.pickup_until }}</p>
+    <a class="button secondary" href="{{ url_for('listing_detail', listing_id=item.id) }}">View details</a>
+  </article>
+{% else %}
+  <div class="empty"><h3>No available listings yet</h3><p>Try another search or sign in to share surplus food.</p></div>
+{% endfor %}
+</div>
+{% endblock %}
